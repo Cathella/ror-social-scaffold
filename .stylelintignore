@@ -1,0 +1,12 @@
+*.jpg
+*.png
+*.webp
+*.ico
+img/*.svg
+Gemfile
+Gemfile.lock
+*.rb
+*.json
+bin/**
+config/**
+*.erb
