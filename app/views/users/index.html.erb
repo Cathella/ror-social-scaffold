@@ -6,6 +6,13 @@
         <span class="profile-link">
           <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
         </span>
+        <span>
+          <% if current_user.friend?(user) %>
+          <span>your friend</span>
+          <% else %>
+          <span>invite</span>
+          <% end %>
+        </span>
       </li>
     <% end %>
   </ul>
