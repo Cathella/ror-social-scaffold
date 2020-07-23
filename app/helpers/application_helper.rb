@@ -15,4 +15,15 @@ module ApplicationHelper
       link_to('Like!', post_likes_path(post_id: post.id), method: :post)
     end
   end
+
+  def friend_request_btn(user)
+    logged_in_user = current_user
+    if @received_requests.include? user
+      link_to('Accept', )
+    elsif @pending_request.include? user
+      "pending invitation"
+    elsif !logged_in_user.friend?(user)
+      link_to('Invite', user_friendships_path(friend_id: user.id, user_id: logged_in_user.id), method: :post)
+    end
+  end
 end

@@ -1,8 +1,9 @@
 class FriendshipsController < ApplicationController
   def create
-    @friendship = current_user.friendships.new(friend_id: params[:friend_id], confirmed: false)
+    set_friendship
+    @friendship = current_user.friendships.build(friendship_params)
     if @friendship.save
-      redirect_to users_path, notice: 'You liked a post.'
+      redirect_to users_path, notice: "friend request sent."
     else
       redirect_to posts_path, alert: 'You cannot send this user a friend request.'
     end
@@ -17,4 +18,9 @@ class FriendshipsController < ApplicationController
   #    redirect_to posts_path, alert: 'You cannot dislike post that you did not like before.'
   #  end
   #end
+  private
+
+  def friendship_params
+    params.require(:friendship).permit(:friend_id)
+  end
 end
