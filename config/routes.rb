@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show] do
     resources :friendships, only: [:create, :destroy]
   end
+
+  post 'accept_request', to: 'users#confirm_request'
+
   resources :posts, only: [:index, :create] do
     resources :comments, only: [:create]
     resources :likes, only: [:create, :destroy]
