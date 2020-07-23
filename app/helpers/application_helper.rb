@@ -21,7 +21,7 @@ module ApplicationHelper
     if @received_requests.include? user
       link_to('Accept', accept_request_path(friend: user), method: :post)
     elsif @pending_request.include? user
-      "pending invitation"
+      'pending invitation'
     elsif !logged_in_user.friend?(user)
       link_to('Invite', user_friendships_path(friend_id: user.id, user_id: logged_in_user.id), method: :post)
     else
