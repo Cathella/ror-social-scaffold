@@ -19,10 +19,10 @@ module ApplicationHelper
   def friend_request_btn(user)
     logged_in_user = current_user
     if @received_requests.include? user
-      link_to('Accept', accept_request_path(friend: user), method: :post)
+      link_to('Accept', accept_request_path(friend_id: user.id), method: :patch)
     elsif @pending_request.include? user
       'pending invitation'
-    elsif !logged_in_user.friend?(user)
+    elsif logged_in_user.friend?(user).eql? false
       link_to('Invite', user_friendships_path(friend_id: user.id, user_id: logged_in_user.id), method: :post)
     else
       'you both are friends'

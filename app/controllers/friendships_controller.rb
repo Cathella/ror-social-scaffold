@@ -8,6 +8,12 @@ class FriendshipsController < ApplicationController
     end
   end
 
+  def accept
+    friend = User.find(params[:friend_id])
+    current_user.confirm_friend(friend)
+    redirect_to users_path, notice: 'friend request accepted.'
+  end
+
   # def destroy
   #  friendship = Friendship.find_by(id: params[:id], user_id: current_user.id, friend_id: params[:friend_id])
   #  if like
