@@ -18,6 +18,7 @@ module ApplicationHelper
 
   def friend_request_btn(user)
     return '' if user.eql? current_user
+
     if @pending_request.include? user
       'pending invitation'
     elsif !current_user.friend?(user) and !@received_requests.include? user
