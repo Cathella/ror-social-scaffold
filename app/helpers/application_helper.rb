@@ -17,19 +17,21 @@ module ApplicationHelper
   end
 
   def friend_request_btn(user)
-    logged_in_user = current_user
+    return '' if user.eql? current_user
     if @pending_request.include? user
       'pending invitation'
-    elsif logged_in_user.friend?(user).eql? false
-      link_to('Invite', user_friendships_path(friend_id: user.id, user_id: logged_in_user.id), method: :post)
-    elsif logged_in_user.friend?(user)
+    elsif !current_user.friend?(user) and !@received_requests.include? user
+      link_to('Invite', user_friendships_path(friend_id: user.id, user_id: current_user.id), method: :post)
+    elsif current_user.friend?(user)
       'you both are friends'
+    else
+      "#{user.name} sent you a friend request"
     end
   end
 
-  def confirm_btn(user)
-    if @received_requests.include? user
-      link_to('Accept', accept_request_path(friend_id: user.id), method: :patch)
-    end
-  end
+  # def confirm_btn(user)
+  #   if @received_requests.include? user
+  #     link_to('Accept', accept_request_path(friend_id: user.id), method: :patch)
+  #   end
+  # end
 end
