@@ -1,0 +1,16 @@
+<div>
+  <% if friend_request_count > 0 %>
+    <h3>You have Friend Request From</h3>
+    <% @received_requests.each do |user| %>
+    <li>
+      Name: <%= user.name %>
+      <span class="profile-link">
+        <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+      </span>
+      <%= confirm_btn(user) %>
+    </li>
+    <% end %>
+  <% else %>
+    <h3>You Have No Friend Request</h3>
+  <% end %>
+</div>

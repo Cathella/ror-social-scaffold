@@ -20,6 +20,7 @@
         </div>
       </div>
       <% if current_user %>
+        <span> FRIEND REQUESTS (<%= friend_request_count %>)</span>
         <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
         <span class="font-weight-bold"><%= current_user.name %></span>
       <% else %>
