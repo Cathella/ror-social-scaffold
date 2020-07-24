@@ -30,7 +30,11 @@ module ApplicationHelper
   end
 
   def confirm_btn(user)
-    link_to('Accept', accept_request_path(friend_id: user.id, user_id: current_user.id), method: :post)
+    link_to('Accept', accept_request_path(friend_id: user.id, user_id: current_user.id), method: :put)
+  end
+
+  def reject_btn(user)
+    
   end
 
   # def confirm_btn(user)

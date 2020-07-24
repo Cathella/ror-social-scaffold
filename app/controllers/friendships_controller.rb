@@ -11,19 +11,11 @@ class FriendshipsController < ApplicationController
   def accept
     friend = User.find(params[:friend_id])
     current_user.confirm_friend(friend)
-    @friendship = current_user.friendships.build(friend_id: friend.id, confirmed: true)
-    if @friendship.save
-      redirect_to users_path, notice: 'friend request accepted.'
-    else
-      redirect_to posts_path, alert: "You cannot accept this user's friend request."
-    end
+    redirect_to users_path, notice: 'friend request accepted.'
   end
 
-  # def accept
-  #   friend = User.find(params[:friend_id])
-  #   current_user.confirm_friend(friend)
-  #   redirect_to users_path, notice: 'friend request accepted.'
-  # end
+  def reject
+  end
 
   def destroy
     friendship = Friendship.find(params[:id])
