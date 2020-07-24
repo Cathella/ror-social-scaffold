@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :friendships, only: [:create, :destroy]
   end
 
-  patch 'accept_request', to: 'friendships#accept'
+  post 'accept_request', to: 'friendships#accept'
 
   resources :posts, only: [:index, :create] do
     resources :comments, only: [:create]

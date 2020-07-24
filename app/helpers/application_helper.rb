@@ -29,6 +29,10 @@ module ApplicationHelper
     end
   end
 
+  def confirm_btn(user)
+    link_to('Accept', accept_request_path(friend_id: user.id, user_id: current_user.id), method: :post)
+  end
+
   # def confirm_btn(user)
   #   if @received_requests.include? user
   #     link_to('Accept', accept_request_path(friend_id: user.id), method: :patch)

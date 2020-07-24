@@ -7,6 +7,7 @@
       <span class="profile-link">
         <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
       </span>
+      <%= confirm_btn(user) %>
     </li>
     <% end %>
   <% else %>
