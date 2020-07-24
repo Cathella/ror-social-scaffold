@@ -14,15 +14,19 @@ class FriendshipsController < ApplicationController
     redirect_to users_path, notice: 'friend request accepted.'
   end
 
-  # def destroy
-  #  friendship = Friendship.find_by(id: params[:id], user_id: current_user.id, friend_id: params[:friend_id])
-  #  if like
-  #    like.destroy
-  #    redirect_to posts_path, notice: 'You disliked a post.'
-  #  else
-  #    redirect_to posts_path, alert: 'You cannot dislike post that you did not like before.'
-  #  end
-  # end
+  def destroy
+    friendship = Friendship.find(params[:id])
+    # friend = params[:friend_id]
+    # user = params[:user_id]
+    # friendship = Friendship.where(user_id: user, friend_id: friend)
+    # friendship = Friendship.find_by(id: params[:id], user_id: current_user.id, friend_id: params[:friend_id])
+    if friendship
+      friendship.destroy
+      redirect_to users_path, notice: "friend request rejected"
+    else
+      redirect_to users_path, alert: "could not reject request, try again"
+    end
+  end
 
   private
 

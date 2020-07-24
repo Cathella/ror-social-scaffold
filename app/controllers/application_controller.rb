@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :friend_request_count
+  helper_method :friend_request_count, :get_friendship
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
@@ -13,5 +13,9 @@ class ApplicationController < ActionController::Base
 
   def friend_request_count
     current_user.friend_requests.length
+  end
+
+  def get_friendship
+    current_user.inverse_friendships.where(friend_id: current_user.id)
   end
 end
