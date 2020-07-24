@@ -14,8 +14,4 @@ class ApplicationController < ActionController::Base
   def friend_request_count
     current_user.friend_requests.length
   end
-
-  def get_friendship
-    current_user.inverse_friendships.where(friend_id: current_user.id)
-  end
 end
