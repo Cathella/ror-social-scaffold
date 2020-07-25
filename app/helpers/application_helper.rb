@@ -37,10 +37,4 @@ module ApplicationHelper
   def reject_btn(user)
     link_to('Reject', reject_request_path(friend_id: user.id), method: :delete)
   end
-
-  # def confirm_btn(user)
-  #   if @received_requests.include? user
-  #     link_to('Accept', accept_request_path(friend_id: user.id), method: :patch)
-  #   end
-  # end
 end
