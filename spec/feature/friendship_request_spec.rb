@@ -1,42 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe Friendship, type: :feature do
-  let(:person1) { User.create(name: 'Sharon', email: 'piexioeexa@hh.com', password: 'i8juejj41A') }
+  def log_in(user)
+    visit new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    click_on 'Log in'
+  end
 
-  let(:person2) { User.create(name: 'John', email: 'pix33xa@hh.com', password: 'i2e8juejj41A') }
-
-  describe 'friendship requests' do
-    let(:person1) { User.create(name: 'Sharon', email: 'piexioeexa@hh.com', password: 'i8juejj41A') }
-    let(:person2) { User.create(name: 'John', email: 'pix33xa@hh.com', password: 'i2e8juejj41A') }
-
-    def log_in(user)
-      visit new_user_session_path
-      fill_in 'user_email', with: user.email
-      fill_in 'user_password', with: user.password
-      click_on 'Log in'
-    end
-
-    def send_request(friend)
+  context 'sending a friend request' do
+    it 'sends a friend request' do
+      sender = User.create(name: 'Sharon', email: 'piexioeexa@hh.com', password: 'i8juejj41A')
+      receiver = User.create(name: 'John', email: 'pix33xa@hh.com', password: 'i2e8juejj41A')
+      log_in(sender)
       visit users_path
-      find('li', text: "#{friend.name}").click_link('Invite')
+      find('li', text: receiver.name.to_s).click_link('Invite')
+      expect(page).to have_content 'friend request sent.'
+      expect(sender.pending_friends.count).to eql(1)
     end
+  end
 
-    context 'sending a friend request' do
-      it 'sends a friend request' do
-        sender = person1
-        receiver = person2
-        log_in(sender)
-        send_request(receiver)
-        expect(page).to have_content 'friend request sent.'
-      end
+  context 'approving a friend request' do
+    it 'accepts a friend request' do
+      user = User.create(name: 'Hope', email: 'jjdjj@uu.com', password: '9djsHHu')
+      user2 = User.create(name: 'James', email: 'jjfdfddjj@uu.com', password: '9djsfffHHu')
+      user2.friendships.create(friend_id: user.id, confirmed: false)
+      log_in(user)
+      visit users_path
+      first('li', text: user2.name.to_s).click_on('Accept')
+      expect(page).to have_content 'friend request accepted.'
+      expect(user.friend?(user2)).to eql(true)
+    end
+  end
 
-      it 'sender should have pending request' do
-        sender = person1
-        receiver = person2
-        log_in(sender)
-        send_request(receiver)
-        expect(sender.pending_friends.count).to eql(1)
-      end
+  context 'rejecting a friend requests' do
+    it 'rejects a friend request' do
+      user = User.create(name: 'Hopefu', email: 'jjdjsdj@uu.com', password: '9dj555sHHu')
+      user2 = User.create(name: 'Jameddsds', email: 'jjfdsdsddfddjj@uu.com', password: '9dj555sfffHHu')
+      user2.friendships.create(friend_id: user.id, confirmed: false)
+      log_in(user)
+      visit users_path
+      first('li', text: user2.name.to_s).click_on('Reject')
+      expect(page).to have_content 'friend request rejected.'
+      expect(user.friend?(user2)).to eql(false)
     end
   end
 end
