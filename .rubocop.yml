@@ -12,6 +12,11 @@ AllCops:
 
 Layout/LineLength:
   Max: 120
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+
 Metrics/MethodLength:
   Include:
     - "app/controllers/*"
@@ -38,6 +43,12 @@ Style/AndOr:
   Enabled: false
 Style/DefWithParentheses:
   Enabled: false
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
 

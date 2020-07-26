@@ -15,4 +15,26 @@ module ApplicationHelper
       link_to('Like!', post_likes_path(post_id: post.id), method: :post)
     end
   end
+
+  def friend_request_btn(user)
+    return '' if user.eql? current_user
+
+    if @pending_request.include? user
+      'pending invitation'
+    elsif !current_user.friend?(user) and !@received_requests.include? user
+      link_to('Invite', user_friendships_path(friend_id: user.id, user_id: current_user.id), method: :post)
+    elsif current_user.friend?(user)
+      'you both are friends'
+    else
+      "#{user.name} sent you a friend request"
+    end
+  end
+
+  def confirm_btn(user)
+    link_to('Accept', accept_request_path(friend_id: user.id), method: :put)
+  end
+
+  def reject_btn(user)
+    link_to('Reject', reject_request_path(friend_id: user.id), method: :delete)
+  end
 end
