@@ -1,7 +1,7 @@
 class FriendshipsController < ApplicationController
   def create
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
-    if @friendship.save
+    friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    if friendship.save
       redirect_to users_path, notice: 'friend request sent.'
     else
       redirect_to posts_path, alert: 'You cannot send this user a friend request.'
@@ -15,8 +15,8 @@ class FriendshipsController < ApplicationController
   end
 
   def reject
-    @friendship = current_user.inverse_friendships.where(user_id: params[:friend_id])[0]
-    @friendship.destroy
+    friendship = current_user.inverse_friendships.where(user_id: params[:friend_id])[0]
+    friendship.destroy
     redirect_to users_path, notice: 'friend request rejected.'
   end
 

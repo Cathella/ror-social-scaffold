@@ -18,6 +18,10 @@ class User < ApplicationRecord
     self.friends.include?(user)
   end
 
+  def mutual_friends?(user)
+    self.friend?(user) and user.friend?(self)
+  end
+
   def confirm_friend(user)
     self.friends << user
   end
