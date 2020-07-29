@@ -11,6 +11,7 @@ class FriendshipsController < ApplicationController
   def accept
     friend = User.find(params[:friend_id])
     current_user.confirm_friend(friend)
+    friend.request_accepted(current_user)
     redirect_to users_path, notice: 'friend request accepted.'
   end
 
