@@ -1,19 +1,46 @@
-<%= form_for(@post) do |form| %>
-  <%= form.label :content %>
-  <%= form.text_field :content, id: :post_content, class: 'form-control', placeholder: 'Add New Post' %>
-  <% if @post.errors.full_messages.any? %>
-    <p class="errors">
-      <%= "Post could not be saved. #{@post.errors.full_messages.join('. ')}" %>
-    </p>
-  <% end %>
-  <%= form.submit 'Save', class: 'btn btn-primary' %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
 
-<article class="timeline">
-  <h3>
-    Recent posts
-  </h3>
-  <ul class="posts">
-    <%= render @timeline_posts %>
-  </ul>
-</article>
+    </div>
+
+    <div class="col-md-6">
+      <%= form_for(@post) do |form| %>
+        <%= form.label :content %>
+        <%= form.text_field :content, id: :post_content, class: 'form-control', placeholder: 'Add New Post' %>
+        <% if @post.errors.full_messages.any? %>
+          <p class="errors">
+            <%= "Post could not be saved. #{@post.errors.full_messages.join('. ')}" %>
+          </p>
+        <% end %>
+        <%= form.submit 'Save', class: 'btn btn-primary' %>
+      <% end %>
+
+      <article class="timeline">
+        <h3>
+          Recent posts
+        </h3>
+        <ul class="posts">
+          <%= render @timeline_posts %>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="col-md-3">
+      <div class="user-summary mt-2 p-3">
+        <p class="pb-3">All Users</p>
+        <ul class="">
+          <% @users.each do |user| %>
+            <li>
+              <%= user.name %>
+              <span class="profile-link">
+                <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
