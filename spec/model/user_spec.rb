@@ -10,6 +10,13 @@ RSpec.describe User, type: :model do
     it { should have_many(:likes).dependent(:destroy) }
     it { should have_many(:friendships) }
     it { should have_many(:inverse_friendships).with_foreign_key('friend_id').class_name('Friendship') }
+    it { should have_many(:accepted_friendships).conditions(confirmed: true).with_foreign_key('user_id').class_name('Friendship') }
+    it { should have_many(:accepted_inverse_friendships).conditions(confirmed: true).with_foreign_key('friend_id').class_name('Friendship') }
+    it { should have_many(:pending_friendships).conditions(confirmed: nil).with_foreign_key('user_id').class_name('Friendship') }
+    it { should have_many(:pending_friends).through(:pending_friendships).source(:friend).with_foreign_key('friend_id') }
+    it { should have_many(:received_friendships).conditions(confirmed: nil).with_foreign_key('friend_id').class_name('Friendship') }
+    it { should have_many(:friend_requests).through(:received_friendships).source(:user).with_foreign_key('user_id') }
+    it { should have_many(:friends).through(:friendships) }
   end
 
   context 'Validations' do
