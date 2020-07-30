@@ -14,7 +14,6 @@ $divider-color: #bdbdbd;
 }
 
 body {
-  background: #fff;
   position: relative;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -38,12 +37,13 @@ a {
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 16px 48px;
-  background-color: $primary-color-dark;
+  padding: 16px 48px 0;
+  background-color: #002857;
   color: $primary-color-light;
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
 
   a {
-    color: $primary-color-light;
+    color: #0077ff;
     text-transform: uppercase;
     font-weight: 900;
   }
@@ -72,6 +72,11 @@ a {
   flex-direction: column;
   align-items: center;
   padding: 16px;
+  background: #002857;
+
+  h2 {
+    color: #0077ff;
+  }
 }
 
 .notice,
@@ -137,7 +142,7 @@ a {
 }
 
 form {
-  width: 80%;
+  width: 100%;
   margin: 8px 0;
 
   .field {
@@ -146,18 +151,22 @@ form {
 
     label {
       margin-bottom: 8px;
+      color: #0077ff;
+      text-transform: uppercase;
+      font-size: 12px;
     }
 
     input {
       width: 100%;
-      border: 1px solid $divider-color;
+      border: 1px solid rgba(255, 255, 255, .15);
       border-radius: 4px;
       padding: 8px;
-      background-color: $primary-color-light;
+      color: rgba(255, 255, 255, .3);
+      background-color: transparent;
     }
 
     input[type="checkbox"] {
-      width: fit-content;
+      width: 30%;
     }
   }
 
@@ -169,17 +178,21 @@ form {
 
   input[type="submit"] {
     padding: 8px;
-    width: 50%;
+    width: 100%;
     border: none;
-    border-radius: 4px;
-    background-color: $primary-color-dark;
+    border-radius: 20px;
+    background-color: #0077ff;
     color: $primary-color-light;
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 700;
+    -webkit-box-shadow: 0px 3px 10px 0px rgba(0,119,255, 0.4);
+    -moz-box-shadow: 0px 3px 10px 0px rgba(0,119,255, 0.4);
+    box-shadow: 0px 3px 10px 0px rgba(0,119,255, 0.4);
   }
 
   input[type="submit"]:hover {
-    background-color: $primary-color;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, .15);
     color: #fff;
   }
 
@@ -337,7 +350,7 @@ form {
 
 @media (min-width: 780px) {
   form {
-    width: 40%;
+    width: 60%;
   }
 
   .new_post,
