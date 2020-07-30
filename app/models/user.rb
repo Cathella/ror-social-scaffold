@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  # rubocop:disable Lint/ShadowingOuterLocalVariable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -10,31 +9,51 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :friendships
+
+  # all friendships user created
+  has_many :friendships, dependent: :destroy
+  # all friendships created by other users
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
 
-  def friends
-    friends_array = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-    friends_array += inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
-    friends_array.compact
-  end
+  # all accepted friendships user created
+  has_many :accepted_friendships, -> { where confirmed: true }, class_name: 'Friendship', foreign_key: 'user_id'
+  has_many :accepted_inverse_friendships, -> { where confirmed: true }, class_name: 'Friendship', foreign_key: 'friend_id'
 
-  def pending_friends
-    friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
-  end
+  # all friendships user created but has not been accepted
+  has_many :pending_friendships, -> { where confirmed: nil }, class_name: 'Friendship', foreign_key: 'user_id'
+  # array of users that request was sent to but have not accepted
+  has_many :pending_friends, through: :pending_friendships, source: :friend, foreign_key: 'friend_id'
 
-  def friend_requests
-    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
-  end
+  # all friendships self received but has not accepted
+  has_many :received_friendships, -> { where confirmed: nil }, class_name: 'Friendship', foreign_key: 'friend_id'
+  # array of users who sent a request that self hasn't accepted
+  has_many :friend_requests, through: :received_friendships, source: :user, foreign_key: 'user_id'
 
-  def confirm_friend(user)
-    friendship = inverse_friendships.find { |friendship| friendship.user == user }
-    friendship.confirmed = true
-    friendship.save
-  end
+  # friends
+  # has_many :friends_accepted, through: :accepted_inverse_friendships, source: :user, foreign_key: 'user_id'
+  # has_many :friends_initiated, through: :accepted_friendships
+  has_many :friends, through: :friendships
 
   def friend?(user)
     friends.include?(user)
   end
+
+  def mutual_friends?(user)
+    friend?(user) and user.friend?(self)
+  end
+
+  def all_friends
+    (accepted_friendships + accepted_inverse_friendships).compact
+  end
+
+  def confirm_friend(user)
+    friendship = friendships.build(friend: user, confirmed: true)
+    friendship.save
+  end
+
+  def request_accepted(user)
+    friendship = friendships.where(friend: user)[0]
+    friendship.confirmed = true
+    friendship.save
+  end
 end
-# rubocop:enable Lint/ShadowingOuterLocalVariable

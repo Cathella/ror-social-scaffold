@@ -24,7 +24,7 @@ RSpec.describe Friendship, type: :feature do
     it 'accepts a friend request' do
       user = User.create(name: 'Hope', email: 'jjdjj@uu.com', password: '9djsHHu')
       user2 = User.create(name: 'James', email: 'jjfdfddjj@uu.com', password: '9djsfffHHu')
-      user2.friendships.create(friend_id: user.id, confirmed: false)
+      user2.friendships.create(friend_id: user.id)
       log_in(user)
       visit users_path
       first('li', text: user2.name.to_s).click_on('Accept')
@@ -37,7 +37,7 @@ RSpec.describe Friendship, type: :feature do
     it 'rejects a friend request' do
       user = User.create(name: 'Hopefu', email: 'jjdjsdj@uu.com', password: '9dj555sHHu')
       user2 = User.create(name: 'Jameddsds', email: 'jjfdsdsddfddjj@uu.com', password: '9dj555sfffHHu')
-      user2.friendships.create(friend_id: user.id, confirmed: false)
+      user2.friendships.create(friend_id: user.id)
       log_in(user)
       visit users_path
       first('li', text: user2.name.to_s).click_on('Reject')
