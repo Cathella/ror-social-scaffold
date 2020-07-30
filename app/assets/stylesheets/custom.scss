@@ -39,7 +39,7 @@ a {
   justify-content: space-between;
   padding: 16px 48px 0;
   background-color: #001b3a;
-  color: $primary-color-light;
+  color: rgba(255, 255, 255, .5);
   border-bottom: 1px solid rgba(255, 255, 255, .15);
 
   a {
@@ -103,14 +103,16 @@ a {
   color: red;
 }
 
-#new_post {
+#new_post,
+#new_comment {
   position: relative;
 
   input.btn {
     position: absolute;
     width: 20%;
     right: 10px;
-    top: 17px;
+    top: 20px;
+    font-size: 12px;
   }
 }
 
@@ -231,7 +233,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, .6);
 
   h3 {
     margin: 8px 0;
@@ -253,7 +255,7 @@ form {
 
     .post-author {
       margin: 0 0 8px 0;
-      color: $primary-color-dark;
+      color: #0077ff;
       text-transform: capitalize;
     }
   }
@@ -262,7 +264,7 @@ form {
     float: right;
 
     a {
-      color: $primary-color-dark;
+      color: #0077ff;
       font-weight: bold;
       font-size: 0.9em;
       margin: 0 4px;
@@ -326,6 +328,7 @@ form {
 .users-section {
   width: 100%;
   margin: 10px;
+  color: rgba(255, 255, 255, .4);
 
   .users-list li {
     margin-bottom: 16px;
@@ -336,7 +339,7 @@ form {
   .profile-link {
     font-size: 0.8em;
     margin: 0 0 8px 0;
-    color: $primary-color-dark;
+    color: #0077ff
   }
 }
 
