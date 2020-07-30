@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-
   context 'Associations' do
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:likes).dependent(:destroy) }
@@ -22,6 +21,6 @@ RSpec.describe Post, type: :model do
     end
 
     it { should validate_presence_of(:content) }
-    it { should validate_length_of(:content).is_at_most(1000).with_message("1000 characters in post is the maximum allowed.") }
+    it { should validate_length_of(:content).is_at_most(1000).with_message('1000 characters in post is the maximum allowed.') }
   end
 end
